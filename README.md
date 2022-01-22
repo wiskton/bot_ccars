@@ -9,7 +9,7 @@ Instalar no mesmo diretório ou crie um env para o bot
 
 Rodar o bot
 
-        python ccar.py
+    python ccar.py
 
 
 ## Windows 
@@ -17,4 +17,4 @@ Rodar o bot
 
 Rodar o bot
 
-        run.bat
+    run.bat
