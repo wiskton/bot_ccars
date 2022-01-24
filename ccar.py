@@ -15,8 +15,8 @@ cars = [{
 
 menu_cars_x = 578
 menu_cars_y = 98
-close_race_x = 300
-close_race_y = 300
+close_race_x = 1344
+close_race_y = 91
 
 # ---------------------------
 
@@ -44,13 +44,17 @@ class Window(QWidget):
     def click(self, x, y):
         mouse.move(x, y, absolute=True, duration=0.1)
         mouse.click('left')
-        self.sleep(2)
+        self.sleep(5)
 
     def scroll(self, value):
         pyautogui.vscroll(value)
 
     def sleep(self, seconds):
-        time.sleep(5)
+        time.sleep(seconds)
+
+    def write(self, text):
+        press(text)
+        self.sleep(2)
 
     def rotine(self):
         for car in cars:
@@ -71,26 +75,63 @@ class Window(QWidget):
             if not self._running_bot:
                 return 
 
+            print("refuel")
+            self.click(1253, 622)
+            if not self._running_bot:
+                return
+
+            print("refuel - ok")
+            self.click(1038, 154)
+            if not self._running_bot:
+                return
+
             # scroll final
             print("rolando página até o final")
             self.scroll(-3000)
             self.sleep(5)
             if not self._running_bot:
-                return 
+                return
 
             for race in range(1, car["races"]+1):
                 print("iniciando a corrida", race)
                 # start corrida
-                print(car["x"], car["y"])
                 self.click(car["x"], car["y"])
                 if not self._running_bot:
                     return 
 
+                ''' 
+                print("quebrar captcha")
+                captcha = self.captcha()
+                self.sleep(5)
+                if not self._running_bot:
+                    return
+
+                print("digitando captcha")
+                self.write(captcha)
+                if not self._running_bot:
+                    return
+
+                print("iniciar corrida")
+                self.click(957,689)
+                if not self._running_bot:
+                    return
+                '''
+
+                print("digite o captcha")
+                self.sleep(30)
+
                 # aguarda corrida
                 print("aguardando a corrida terminar")
-                self.sleep(30)
+                self.sleep(60)
                 if not self._running_bot:
                     return 
+                    
+                # scroll final
+                print("rolando página até o inicio")
+                self.scroll(0)
+                self.sleep(5)
+                if not self._running_bot:
+                    return
 
                 # fecha janela
                 self.click(close_race_x, close_race_y)
